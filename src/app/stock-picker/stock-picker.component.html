@@ -1,0 +1,13 @@
+<label>
+  Pick a stock
+  <input type="text" [formControl]="keyword" />
+</label>
+<p><button (click)="search()">Search</button></p>
+
+<ul>
+  <li *ngFor="let result of results">
+    <a (click)="setActiveSymbol(result.symbol)"
+      >{{ result.symbol }} - {{ result.name }} ({{ result.type }})</a
+    >
+  </li>
+</ul>
