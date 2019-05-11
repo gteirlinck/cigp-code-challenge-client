@@ -1,6 +1,95 @@
-<table>
-  <tr *ngFor="let kvp of getProperties()">
-    <td>{{ kvp[0] }}</td>
-    <td>{{ kvp[1] }}</td>
-  </tr>
-</table>
+<mat-card *ngIf="quote">
+  <mat-card-title>{{ stock.symbol }}</mat-card-title>
+  <mat-card-subtitle>{{ stock.name }}</mat-card-subtitle>
+  <mat-grid-list cols="8" rowHeight="30">
+    <mat-grid-tile>
+      <mat-card-content>
+        <strong>Open:</strong>
+      </mat-card-content>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card-content>
+        {{ quote.open | currency: 'USD' }}
+      </mat-card-content>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-card-content>
+        <strong>High:</strong>
+      </mat-card-content>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card-content>
+        {{ quote.high | currency: 'USD' }}
+      </mat-card-content>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-card-content>
+        <strong>Low:</strong>
+      </mat-card-content>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card-content>
+        {{ quote.low | currency: 'USD' }}
+      </mat-card-content>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-card-content>
+        <strong>Close:</strong>
+      </mat-card-content>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card-content>
+        {{ quote.close | currency: 'USD' }}
+      </mat-card-content>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-card-content>
+        <strong>Date:</strong>
+      </mat-card-content>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card-content>
+        {{ quote.latestTradingDay | date }}
+      </mat-card-content>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-card-content>
+        <strong>Prev Close:</strong>
+      </mat-card-content>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card-content>
+        {{ quote.close | currency: 'USD' }}
+      </mat-card-content>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-card-content>
+        <strong>Change:</strong>
+      </mat-card-content>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card-content>
+        {{ quote.change | currency: 'USD' }} ({{
+          quote.changePercent | percent: '1.2-2'
+        }})
+      </mat-card-content>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-card-content>
+        <strong>Volume:</strong>
+      </mat-card-content>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card-content>
+        {{ quote.volume | number: '1.0-0' }}
+      </mat-card-content>
+    </mat-grid-tile>
+  </mat-grid-list>
+</mat-card>

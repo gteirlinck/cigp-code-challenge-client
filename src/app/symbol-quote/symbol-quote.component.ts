@@ -1,5 +1,9 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { ServerAPIService, Quote } from '../server-api.service';
+import {
+  ServerAPIService,
+  Quote,
+  SearchResultItem
+} from '../server-api.service';
 
 @Component({
   selector: 'app-symbol-quote',
@@ -7,10 +11,10 @@ import { ServerAPIService, Quote } from '../server-api.service';
   styleUrls: ['./symbol-quote.component.css']
 })
 export class SymbolQuoteComponent implements OnChanges {
-  private quote: Quote;
+  quote: Quote;
 
   @Input()
-  private symbol: string;
+  stock: SearchResultItem;
 
   constructor(private service: ServerAPIService) {}
 
@@ -19,9 +23,9 @@ export class SymbolQuoteComponent implements OnChanges {
   }
 
   loadLatestQuote() {
-    if (this.symbol) {
+    if (this.stock) {
       this.service
-        .getLatestQuote(this.symbol)
+        .getLatestQuote(this.stock.symbol)
         .subscribe(quote => (this.quote = quote));
     }
   }

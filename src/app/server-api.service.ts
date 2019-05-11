@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ServerAPIService {
-  activeSymbol: string = null;
+  activeStock: SearchResultItem = null;
   constructor(private httpClient: HttpClient) {}
 
   getTimeSeries(symbol: string): Observable<DailyTimeSeriesPoint[]> {

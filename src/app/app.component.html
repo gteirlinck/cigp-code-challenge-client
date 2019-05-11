@@ -4,7 +4,15 @@
   <app-searchbox-control></app-searchbox-control>
   <app-login-control></app-login-control>
 </mat-toolbar>
-<div *ngIf="service.activeSymbol">
-  <app-symbol-quote [symbol]="service.activeSymbol"></app-symbol-quote>
-  <app-chart [symbol]="service.activeSymbol"></app-chart>
+<div *ngIf="service.activeStock">
+  <mat-grid-list cols="3" rowHeight="160">
+    <mat-grid-tile colspan="2">
+      <app-symbol-quote
+        [stock]="service.activeStock"
+        style="width: 100%"
+      ></app-symbol-quote>
+    </mat-grid-tile>
+    <mat-grid-tile></mat-grid-tile>
+  </mat-grid-list>
+  <app-chart [symbol]="service.activeStock.symbol"></app-chart>
 </div>

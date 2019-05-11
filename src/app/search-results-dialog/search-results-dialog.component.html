@@ -8,7 +8,7 @@
     <button
       *ngFor="let result of data.results"
       mat-list-item
-      [mat-dialog-close]="result.symbol"
+      [mat-dialog-close]="result"
     >
       <strong style="margin-right: 1em">{{ result.symbol }}</strong>
       {{ result.name }}

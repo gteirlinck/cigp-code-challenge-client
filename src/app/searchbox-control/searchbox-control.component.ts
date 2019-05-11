@@ -21,11 +21,10 @@ import { SearchResultsDialogComponent } from '../search-results-dialog/search-re
           />
         </mat-form-field>
       </span>
-      <mat-progress-bar
-        *ngSwitchCase="'searching'"
-        mode="buffer"
-        color="accent"
-      ></mat-progress-bar>
+      <span *ngSwitchCase="'searching'">
+        <mat-icon>search</mat-icon>
+        <mat-progress-bar mode="buffer" color="accent"></mat-progress-bar>
+      </span>
       <button *ngSwitchDefault mat-button (click)="mode = 'typing'">
         <mat-icon>search</mat-icon>
         Search a Stock
@@ -60,7 +59,7 @@ export class SearchboxControlComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(symbol => {
       if (symbol) {
-        this.service.activeSymbol = symbol;
+        this.service.activeStock = symbol;
       }
     });
   }
