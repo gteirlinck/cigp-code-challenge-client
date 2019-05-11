@@ -10,6 +10,7 @@ export class AuthService {
   private _idToken = '';
   private _accessToken = '';
   private _expiresAt = 0;
+  private _userID: string = null;
 
   auth0 = new auth0.WebAuth({
     clientID: AppConfig.Auth0Config.clientID,
@@ -27,6 +28,10 @@ export class AuthService {
     return this._idToken;
   }
 
+  get userID(): string {
+    return this._userID;
+  }
+
   constructor(private router: Router) {}
 
   login(): void {
@@ -36,7 +41,7 @@ export class AuthService {
   public handleAuthentication(): void {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
-        console.log(authResult);
+        this._userID = authResult.idTokenPayload.sub;
         window.location.hash = '';
         this.localLogin(authResult);
         this.router.navigate(['']);

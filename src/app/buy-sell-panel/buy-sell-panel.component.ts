@@ -2,6 +2,7 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { HoldingsService } from '../holdings/holdings.service';
 import { Holding } from '../holdings/holding';
 import { FormControl } from '@angular/forms';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-buy-sell-panel',
@@ -23,7 +24,10 @@ export class BuySellPanelComponent implements OnChanges {
   tradingAction = new FormControl();
   tradeQuantity = new FormControl();
 
-  constructor(private holdingsService: HoldingsService) {}
+  constructor(
+    private holdingsService: HoldingsService,
+    private authService: AuthService
+  ) {}
 
   ngOnChanges() {
     if (this.symbol) {

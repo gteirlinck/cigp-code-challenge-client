@@ -26,7 +26,6 @@ export class Holding {
     return this.position === 0
       ? 0
       : this.transactions.reduce((cumulTotal, tran) => {
-          console.log(tran);
           return (
             cumulTotal +
             (tran.type === TransactionType.Buy ? 1 : -1) *
