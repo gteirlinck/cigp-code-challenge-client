@@ -4,7 +4,7 @@
   <app-searchbox-control></app-searchbox-control>
   <app-login-control></app-login-control>
 </mat-toolbar>
-<div *ngIf="service.activeStock">
+<div *ngIf="service.activeStock && service.latestQuote">
   <mat-grid-list cols="3" rowHeight="160">
     <mat-grid-tile colspan="2">
       <app-symbol-quote
@@ -12,7 +12,14 @@
         style="width: 100%"
       ></app-symbol-quote>
     </mat-grid-tile>
-    <mat-grid-tile></mat-grid-tile>
+    <mat-grid-tile>
+      <app-buy-sell-panel
+        *ngIf="authService.isAuthenticated()"
+        [symbol]="service.activeStock.symbol"
+        [latestPrice]="service.latestQuote.close"
+        style="width: 100%"
+      ></app-buy-sell-panel>
+    </mat-grid-tile>
   </mat-grid-list>
   <app-chart [symbol]="service.activeStock.symbol"></app-chart>
 </div>

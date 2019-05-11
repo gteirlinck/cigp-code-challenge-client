@@ -7,7 +7,20 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ServerAPIService {
-  activeStock: SearchResultItem = null;
+  private _activeStock: SearchResultItem = null;
+
+  get activeStock(): SearchResultItem {
+    return this._activeStock;
+  }
+
+  set activeStock(value: SearchResultItem) {
+    if (!this._activeStock || value.symbol !== this._activeStock.symbol) {
+      this._activeStock = value;
+      this.loadLatestQuote();
+    }
+  }
+
+  latestQuote: Quote = null;
   constructor(private httpClient: HttpClient) {}
 
   getTimeSeries(symbol: string): Observable<DailyTimeSeriesPoint[]> {
@@ -16,10 +29,14 @@ export class ServerAPIService {
     );
   }
 
-  getLatestQuote(symbol: string): Observable<Quote> {
-    return this.httpClient.get<Quote>(
-      `${AppConfig.APIEndpoint}/data/${symbol}/latest`
-    );
+  private loadLatestQuote(): void {
+    this.httpClient
+      .get<Quote>(
+        `${AppConfig.APIEndpoint}/data/${this._activeStock.symbol}/latest`
+      )
+      .subscribe(quote => {
+        this.latestQuote = quote;
+      });
   }
 
   searchSymbol(keyword: string): Observable<SearchResultItem[]> {

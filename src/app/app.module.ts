@@ -9,6 +9,7 @@ import { SymbolQuoteComponent } from './symbol-quote/symbol-quote.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -24,6 +25,7 @@ import { LoginControlComponent } from './login-control/login-control.component';
 import { CallbackComponent } from './callback/callback.component';
 import { SearchboxControlComponent } from './searchbox-control/searchbox-control.component';
 import { SearchResultsDialogComponent } from './search-results-dialog/search-results-dialog.component';
+import { BuySellPanelComponent } from './buy-sell-panel/buy-sell-panel.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { SearchResultsDialogComponent } from './search-results-dialog/search-res
     LoginControlComponent,
     CallbackComponent,
     SearchboxControlComponent,
-    SearchResultsDialogComponent
+    SearchResultsDialogComponent,
+    BuySellPanelComponent
   ],
   imports: [
     AmChartsModule,
@@ -43,6 +46,7 @@ import { SearchResultsDialogComponent } from './search-results-dialog/search-res
     BrowserAnimationsModule,
     FlexLayoutModule,
     MatButtonModule,
+    MatButtonToggleModule,
     MatCardModule,
     MatDialogModule,
     MatFormFieldModule,

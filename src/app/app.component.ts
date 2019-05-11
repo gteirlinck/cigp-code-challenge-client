@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     public service: ServerAPIService,
-    private authService: AuthService
+    public authService: AuthService
   ) {
     authService.handleAuthentication();
   }
