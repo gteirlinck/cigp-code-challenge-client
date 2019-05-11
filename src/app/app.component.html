@@ -1,8 +1,9 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>Welcome to {{ title }}!</h1>
-</div>
-<app-stock-picker></app-stock-picker>
+<mat-toolbar color="primary">
+  <span>{{ title }}</span>
+  <span class="fill-space"></span>
+  <app-searchbox-control></app-searchbox-control>
+  <app-login-control></app-login-control>
+</mat-toolbar>
 <div *ngIf="service.activeSymbol">
   <app-symbol-quote [symbol]="service.activeSymbol"></app-symbol-quote>
   <app-chart [symbol]="service.activeSymbol"></app-chart>
