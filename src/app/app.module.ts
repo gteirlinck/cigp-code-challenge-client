@@ -7,7 +7,6 @@ import { AmChartsModule } from '@amcharts/amcharts3-angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SymbolQuoteComponent } from './symbol-quote/symbol-quote.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
@@ -26,6 +25,9 @@ import { CallbackComponent } from './callback/callback.component';
 import { SearchboxControlComponent } from './searchbox-control/searchbox-control.component';
 import { SearchResultsDialogComponent } from './search-results-dialog/search-results-dialog.component';
 import { BuySellPanelComponent } from './buy-sell-panel/buy-sell-panel.component';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 @NgModule({
   declarations: [
@@ -44,7 +46,6 @@ import { BuySellPanelComponent } from './buy-sell-panel/buy-sell-panel.component
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    FlexLayoutModule,
     MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,
@@ -57,7 +58,8 @@ import { BuySellPanelComponent } from './buy-sell-panel/buy-sell-panel.component
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatToolbarModule,
-    AppRoutingModule
+    AppRoutingModule,
+    SocketIoModule.forRoot(config)
   ],
   entryComponents: [SearchResultsDialogComponent],
   providers: [],

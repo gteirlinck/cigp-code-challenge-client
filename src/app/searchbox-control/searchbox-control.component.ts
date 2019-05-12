@@ -13,12 +13,7 @@ import { SearchResultsDialogComponent } from '../search-results-dialog/search-re
           <mat-icon>search</mat-icon>
         </button>
         <mat-form-field>
-          <input
-            matInput
-            type="text"
-            [formControl]="keyword"
-            (keyup.enter)="search()"
-          />
+          <input matInput type="text" [formControl]="keyword" (keyup.enter)="search()" required />
         </mat-form-field>
       </span>
       <span *ngSwitchCase="'searching'">
@@ -42,6 +37,10 @@ export class SearchboxControlComponent implements OnInit {
   ngOnInit() {}
 
   search() {
+    if (!this.keyword.valid) {
+      return;
+    }
+
     const searchedKeyword = this.keyword.value; // Save the value before we reset the searchbox value to empty
     this.keyword.setValue('');
     this.mode = 'searching';
@@ -59,7 +58,7 @@ export class SearchboxControlComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(symbol => {
       if (symbol) {
-        this.service.activeStock = symbol;
+        this.service.setActiveStock(symbol);
       }
     });
   }

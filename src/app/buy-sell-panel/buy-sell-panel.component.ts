@@ -33,7 +33,6 @@ export class BuySellPanelComponent implements OnInit {
   constructor(public holdingsService: HoldingsService) {}
 
   ngOnInit(): void {
-    console.log('Initing');
     this.holdingsService.loadAllHoldings();
   }
 

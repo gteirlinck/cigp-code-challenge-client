@@ -1,6 +1,10 @@
 <mat-card *ngIf="quote">
   <mat-card-title>{{ stock.symbol }}</mat-card-title>
-  <mat-card-subtitle>{{ stock.name }}</mat-card-subtitle>
+  <mat-card-subtitle
+    >{{ stock.name }}&nbsp;<small
+      ><em>(Last update: {{ quote.lastUpdated | date: 'HH:mm:ss z' }})</em></small
+    ></mat-card-subtitle
+  >
   <mat-grid-list cols="8" rowHeight="30">
     <mat-grid-tile>
       <mat-card-content>
@@ -75,9 +79,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-card-content>
-        {{ quote.change | currency: 'USD' }} ({{
-          quote.changePercent | percent: '1.2-2'
-        }})
+        {{ quote.change | currency: 'USD' }} ({{ quote.changePercent | percent: '1.2-2' }})
       </mat-card-content>
     </mat-grid-tile>
 

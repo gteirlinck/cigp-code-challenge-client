@@ -4,32 +4,38 @@ import { AmChart, AmChartsService } from '@amcharts/amcharts3-angular';
 
 @Component({
   selector: 'app-chart',
-  template:
-    '<div id="chartdiv" [style.width.%]="100" [style.height.px]="500"></div>'
+  template: `
+    <div [hidden]="!ready" id="chartdiv" [style.width.%]="100" [style.height.px]="500"></div>
+    <mat-grid-list *ngIf="!ready" cols="1">
+      <mat-grid-tile>
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      </mat-grid-tile>
+    </mat-grid-list>
+  `
 })
 export class ChartComponent implements OnInit, OnDestroy {
   private chart: AmChart;
 
   private _symbol: string;
+  ready = false;
 
   @Input()
   set symbol(value: string) {
     this._symbol = value;
 
     if (this.chart) {
-      this.service.getTimeSeries(this._symbol).subscribe(data => {
+      this.ready = false;
+      this.service.getTimeSeries().subscribe(data => {
         this.AmCharts.updateChart(this.chart, () => {
           this.chart.dataSets[0].title = this._symbol;
           this.chart.dataSets[0].dataProvider = data;
         });
+        this.ready = true;
       });
     }
   }
 
-  constructor(
-    private service: ServerAPIService,
-    private AmCharts: AmChartsService
-  ) {}
+  constructor(private service: ServerAPIService, private AmCharts: AmChartsService) {}
 
   computeCharData(data: DailyTimeSeriesPoint[]) {
     return {
@@ -200,16 +206,14 @@ export class ChartComponent implements OnInit, OnDestroy {
           }
         ]
       },
-      pathToImages: 'src/assets/'
+      pathToImages: 'assets/images/amcharts/'
     };
   }
 
   ngOnInit() {
-    this.service.getTimeSeries(this._symbol).subscribe(data => {
-      this.chart = this.AmCharts.makeChart(
-        'chartdiv',
-        this.computeCharData(data)
-      );
+    this.service.getTimeSeries().subscribe(data => {
+      this.ready = true;
+      this.chart = this.AmCharts.makeChart('chartdiv', this.computeCharData(data));
     });
   }
 
