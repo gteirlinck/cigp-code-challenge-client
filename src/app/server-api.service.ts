@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, Subscription } from 'rxjs';
-import { AppConfig } from './app-config';
+import { Observable, Subscription } from 'rxjs';
+import { environment } from './../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Socket } from 'ngx-socket-io';
 
@@ -18,8 +18,6 @@ export class ServerAPIService {
   private quoteUpdateSubscription: Subscription;
   private quoteUpdate = this.socket.fromEvent<Quote>('quoteUpdate');
 
-  private timeSeries: DailyTimeSeriesPoint[] = null;
-  private timeSeriesUpdateSubscription: Subscription;
   private timeSeriesUpdate = this.socket.fromEvent<DailyTimeSeriesPoint[]>('timeSeriesUpdate');
 
   constructor(private httpClient: HttpClient, private socket: Socket) {}
@@ -44,7 +42,7 @@ export class ServerAPIService {
   }
 
   searchSymbol(keyword: string): Observable<SearchResultItem[]> {
-    return this.httpClient.get<SearchResultItem[]>(`${AppConfig.APIEndpoint}/search-symbol`, {
+    return this.httpClient.get<SearchResultItem[]>(`${environment.APIEndpoint}/search-symbol`, {
       params: { keyword }
     });
   }
@@ -57,9 +55,6 @@ export class ServerAPIService {
 
   async subscribeToSymbolUpdates(symbol: string = null) {
     this.quoteUpdateSubscription = this.quoteUpdate.subscribe(quote => (this.latestQuote = quote));
-    this.timeSeriesUpdateSubscription = this.timeSeriesUpdate.subscribe(timeSeries => {
-      this.timeSeries = timeSeries;
-    });
 
     this.socket.emit('subscribe', symbol || this._activeStock.symbol);
     const subscriptionResult = await this.socket.fromOneTimeEvent<string>('subscribed');
@@ -72,7 +67,6 @@ export class ServerAPIService {
     console.log(unsubscriptionResult);
 
     this.quoteUpdateSubscription.unsubscribe();
-    this.timeSeriesUpdateSubscription.unsubscribe();
   }
 }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ServerAPIService, DailyTimeSeriesPoint } from '../server-api.service';
 import { AmChart, AmChartsService } from '@amcharts/amcharts3-angular';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chart',
@@ -16,6 +17,7 @@ import { AmChart, AmChartsService } from '@amcharts/amcharts3-angular';
 export class ChartComponent implements OnInit, OnDestroy {
   private chart: AmChart;
 
+  private timeSeriesUpdateSubscription: Subscription;
   private _symbol: string;
   ready = false;
 
@@ -25,7 +27,7 @@ export class ChartComponent implements OnInit, OnDestroy {
 
     if (this.chart) {
       this.ready = false;
-      this.service.getTimeSeries().subscribe(data => {
+      this.timeSeriesUpdateSubscription = this.service.getTimeSeries().subscribe(data => {
         this.AmCharts.updateChart(this.chart, () => {
           this.chart.dataSets[0].title = this._symbol;
           this.chart.dataSets[0].dataProvider = data;
@@ -211,7 +213,7 @@ export class ChartComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.service.getTimeSeries().subscribe(data => {
+    this.timeSeriesUpdateSubscription = this.service.getTimeSeries().subscribe(data => {
       this.ready = true;
       this.chart = this.AmCharts.makeChart('chartdiv', this.computeCharData(data));
     });
@@ -220,6 +222,10 @@ export class ChartComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.chart) {
       this.AmCharts.destroyChart(this.chart);
+    }
+
+    if (this.timeSeriesUpdateSubscription) {
+      this.timeSeriesUpdateSubscription.unsubscribe();
     }
   }
 }

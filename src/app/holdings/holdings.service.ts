@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Holdings, Holding } from './holding';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AppConfig } from '../app-config';
+import { environment } from '../../environments/environment';
 import { TransactionType } from './transaction';
 import { AuthService } from '../auth.service';
 import { Observable } from 'rxjs';
@@ -60,20 +60,20 @@ export class HoldingsService {
   }
 
   private getHoldingsFromServer(): Observable<Holdings> {
-    return this.httpClient.get<Holdings>(`${AppConfig.APIEndpoint}/holdings`, {
+    return this.httpClient.get<Holdings>(`${environment.APIEndpoint}/holdings`, {
       headers: new HttpHeaders().set('Authorization', this.authHeader)
     });
   }
 
   private getHoldingFromServer(symbol: string): Observable<Holding> {
-    return this.httpClient.get<Holding>(`${AppConfig.APIEndpoint}/holdings/${symbol}`, {
+    return this.httpClient.get<Holding>(`${environment.APIEndpoint}/holdings/${symbol}`, {
       headers: new HttpHeaders().set('Authorization', this.authHeader)
     });
   }
 
   private createHoldingOnServer(holding: Holding): void {
     this.httpClient
-      .post(`${AppConfig.APIEndpoint}/holdings`, holding, {
+      .post(`${environment.APIEndpoint}/holdings`, holding, {
         headers: new HttpHeaders().set('Authorization', this.authHeader)
       })
       .subscribe(
@@ -86,7 +86,7 @@ export class HoldingsService {
 
   private updateHoldingOnServer(holding: Holding): void {
     this.httpClient
-      .put(`${AppConfig.APIEndpoint}/holdings/${holding.symbol}`, holding, {
+      .put(`${environment.APIEndpoint}/holdings/${holding.symbol}`, holding, {
         headers: new HttpHeaders().set('Authorization', this.authHeader)
       })
       .subscribe(

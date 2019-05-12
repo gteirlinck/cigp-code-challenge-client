@@ -3,7 +3,16 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  APIEndpoint: 'http://localhost:3000/api',
+  Auth0Config: {
+    clientID: 'And6CEN5kGGDM71WtJ8i5ahkS4LNAkII',
+    domain: 'gteirlinck.auth0.com',
+    responseType: 'token id_token',
+    redirectUri: 'http://localhost:4200/callback',
+    scope: 'openid profile',
+    audience: 'https://cigp.api'
+  }
 };
 
 /*
