@@ -1,28 +1,17 @@
-<mat-card *ngIf="holding">
+<mat-card *ngIf="canShow">
   <mat-card-title>
-    Current position: {{ holding.position | number: '1.0-0' }}
+    Current position:
+    {{ position | number: '1.0-0' }}
   </mat-card-title>
   <mat-card-subtitle
-    >Average cost: {{ holding.averageCost | currency: 'USD' }}&nbsp;<small>{{
-      returnPct | percent: '1.2-2'
-    }}</small>
+    >Average cost: {{ averageCost | currency: 'USD' }}&nbsp;<small>{{ returnPct | percent: '1.2-2' }}</small>
   </mat-card-subtitle>
-  <mat-button-toggle-group
-    name="action"
-    aria-label="Action"
-    [formControl]="tradingAction"
-  >
+  <mat-button-toggle-group name="action" aria-label="Action" [formControl]="tradingAction">
     <mat-button-toggle value="BUY">BUY</mat-button-toggle>
     <mat-button-toggle value="SELL">SELL</mat-button-toggle>
   </mat-button-toggle-group>
   <mat-form-field style="margin-left: 20px">
-    <input
-      matInput
-      placeholder="Quantity"
-      type="number"
-      min="1"
-      [formControl]="tradeQuantity"
-    />
+    <input matInput placeholder="Quantity" type="number" min="1" [formControl]="tradeQuantity" />
   </mat-form-field>
   <button mat-button color="warn" (click)="submitTrade()">Submit Trade</button>
 </mat-card>

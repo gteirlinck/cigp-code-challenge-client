@@ -17,7 +17,8 @@ export class AuthService {
     domain: AppConfig.Auth0Config.domain,
     responseType: AppConfig.Auth0Config.responseType,
     redirectUri: AppConfig.Auth0Config.redirectUri,
-    scope: AppConfig.Auth0Config.scope
+    scope: AppConfig.Auth0Config.scope,
+    audience: AppConfig.Auth0Config.audience
   });
 
   get accessToken(): string {
@@ -41,7 +42,7 @@ export class AuthService {
   public handleAuthentication(): void {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
-        this._userID = authResult.idTokenPayload.sub;
+        console.log(authResult);
         window.location.hash = '';
         this.localLogin(authResult);
         this.router.navigate(['']);
@@ -54,10 +55,13 @@ export class AuthService {
 
   private localLogin(authResult): void {
     // Set the time that the Access Token will expire at
+    this._userID = authResult.idTokenPayload.sub;
     const expiresAt = authResult.expiresIn * 1000 + Date.now();
     this._accessToken = authResult.accessToken;
     this._idToken = authResult.idToken;
     this._expiresAt = expiresAt;
+
+    // this.holdingsService.loadAllHoldings(this._userID);
   }
 
   public renewTokens(): void {
@@ -65,9 +69,7 @@ export class AuthService {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.localLogin(authResult);
       } else if (err) {
-        alert(
-          `Could not get a new token (${err.error}: ${err.error_description}).`
-        );
+        alert(`Could not get a new token (${err.error}: ${err.error_description}).`);
         this.logout();
       }
     });

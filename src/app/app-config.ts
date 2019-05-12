@@ -4,6 +4,7 @@ interface IAuth0Config {
   responseType: string;
   redirectUri: string;
   scope: string;
+  audience: string;
 }
 
 interface IAppConfig {
@@ -18,6 +19,7 @@ export const AppConfig: IAppConfig = {
     domain: 'gteirlinck.auth0.com',
     responseType: 'token id_token',
     redirectUri: 'http://localhost:4200/callback',
-    scope: 'openid'
+    scope: 'openid profile',
+    audience: 'https://cigp.api'
   }
 };
