@@ -45,10 +45,16 @@ export class SearchboxControlComponent implements OnInit {
     const searchedKeyword = this.keyword.value; // Save the value before we reset the searchbox value to empty
     this.keyword.setValue('');
     this.mode = 'searching';
-    this.service.searchSymbol(searchedKeyword).subscribe(results => {
-      this.mode = 'idle';
-      this.openDialog(searchedKeyword, results);
-    });
+    this.service.searchSymbol(searchedKeyword).subscribe(
+      results => {
+        this.mode = 'idle';
+        this.openDialog(searchedKeyword, results);
+      },
+      err => {
+        console.error(err);
+        this.mode = 'idle';
+      }
+    );
   }
 
   openDialog(keyword: string, results: SearchResultItem[]): void {
