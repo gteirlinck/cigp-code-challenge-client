@@ -3,7 +3,7 @@ import { Holdings, Holding } from './holding';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { TransactionType } from './transaction';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../auth/auth.service';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,6 +11,8 @@ import { Observable } from 'rxjs';
 })
 export class HoldingsService {
   private holdings: Holdings = [];
+  private isSubscribed = false;
+
   constructor(private httpClient: HttpClient, private authService: AuthService) {}
 
   private get authHeader(): string {
@@ -54,9 +56,12 @@ export class HoldingsService {
   }
 
   loadAllHoldings(): void {
-    this.getHoldingsFromServer().subscribe(holdings => {
-      this.holdings = holdings;
-    });
+    if (!this.isSubscribed) {
+      this.isSubscribed = true;
+      this.getHoldingsFromServer().subscribe(holdings => {
+        this.holdings = holdings;
+      });
+    }
   }
 
   private getHoldingsFromServer(): Observable<Holdings> {

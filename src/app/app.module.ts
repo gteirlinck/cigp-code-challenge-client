@@ -16,8 +16,10 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginControlComponent } from './login-control/login-control.component';
@@ -27,6 +29,10 @@ import { SearchResultsDialogComponent } from './search-results-dialog/search-res
 import { BuySellPanelComponent } from './buy-sell-panel/buy-sell-panel.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from '../environments/environment';
+import { HoldingsComponent } from './holdings/holdings.component';
+import { MenuComponent } from './menu/menu.component';
+import { StockComponent } from './stock/stock.component';
+import { HomeComponent } from './home/home.component';
 
 console.log(environment.APIEndpoint);
 const config: SocketIoConfig = { url: environment.APIEndpoint, options: {} };
@@ -40,7 +46,11 @@ const config: SocketIoConfig = { url: environment.APIEndpoint, options: {} };
     CallbackComponent,
     SearchboxControlComponent,
     SearchResultsDialogComponent,
-    BuySellPanelComponent
+    BuySellPanelComponent,
+    HoldingsComponent,
+    MenuComponent,
+    StockComponent,
+    HomeComponent
   ],
   imports: [
     AmChartsModule,
@@ -57,8 +67,10 @@ const config: SocketIoConfig = { url: environment.APIEndpoint, options: {} };
     MatIconModule,
     MatInputModule,
     MatListModule,
+    MatMenuModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+    MatTableModule,
     MatToolbarModule,
     AppRoutingModule,
     SocketIoModule.forRoot(config)

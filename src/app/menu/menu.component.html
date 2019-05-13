@@ -1,0 +1,8 @@
+<mat-toolbar color="primary">
+  <span>CIGP Stock Picker</span>
+  <span class="fill-space"></span>
+  <a mat-button [routerLink]="['/stock']" routerLinkActive="router-link-active" *ngIf="showStock">Quote</a>
+  <a mat-button [routerLink]="['/holdings']" routerLinkActive="router-link-active" *ngIf="showHoldings">Holdings</a>
+  <app-searchbox-control></app-searchbox-control>
+  <app-login-control></app-login-control>
+</mat-toolbar>

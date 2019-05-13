@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { ServerAPIService, SearchResultItem } from '../server-api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchResultsDialogComponent } from '../search-results-dialog/search-results-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-searchbox-control',
@@ -32,7 +33,7 @@ export class SearchboxControlComponent implements OnInit {
   mode = 'idle';
   keyword = new FormControl('');
 
-  constructor(private service: ServerAPIService, public dialog: MatDialog) {}
+  constructor(private service: ServerAPIService, public dialog: MatDialog, private router: Router) {}
 
   ngOnInit() {}
 
@@ -59,6 +60,7 @@ export class SearchboxControlComponent implements OnInit {
     dialogRef.afterClosed().subscribe(async symbol => {
       if (symbol) {
         await this.service.setActiveStock(symbol);
+        this.router.navigate(['/stock']);
       }
     });
   }

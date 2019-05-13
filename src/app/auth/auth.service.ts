@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from './../environments/environment';
+import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 import * as auth0 from 'auth0-js';
 
@@ -11,6 +11,7 @@ export class AuthService {
   private _accessToken = '';
   private _expiresAt = 0;
   private _userID: string = null;
+  private _username = '';
 
   auth0 = new auth0.WebAuth({
     clientID: environment.Auth0Config.clientID,
@@ -31,6 +32,10 @@ export class AuthService {
 
   get userID(): string {
     return this._userID;
+  }
+
+  get userName(): string {
+    return this._username;
   }
 
   constructor(private router: Router) {}
@@ -59,8 +64,7 @@ export class AuthService {
     this._accessToken = authResult.accessToken;
     this._idToken = authResult.idToken;
     this._expiresAt = expiresAt;
-
-    // this.holdingsService.loadAllHoldings(this._userID);
+    this._username = authResult.idTokenPayload.name || '';
   }
 
   public renewTokens(): void {
