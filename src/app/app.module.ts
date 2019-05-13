@@ -34,7 +34,6 @@ import { MenuComponent } from './menu/menu.component';
 import { StockComponent } from './stock/stock.component';
 import { HomeComponent } from './home/home.component';
 
-console.log(environment.APIEndpoint);
 const config: SocketIoConfig = { url: environment.APIEndpoint, options: {} };
 
 @NgModule({
