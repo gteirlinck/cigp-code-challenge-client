@@ -26,8 +26,10 @@ import { SearchboxControlComponent } from './searchbox-control/searchbox-control
 import { SearchResultsDialogComponent } from './search-results-dialog/search-results-dialog.component';
 import { BuySellPanelComponent } from './buy-sell-panel/buy-sell-panel.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { environment } from '../environments/environment';
 
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+console.log(environment.APIEndpoint);
+const config: SocketIoConfig = { url: environment.APIEndpoint, options: {} };
 
 @NgModule({
   declarations: [

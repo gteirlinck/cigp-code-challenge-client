@@ -4,12 +4,8 @@
     Your search for &nbsp;<em>{{ data.keyword }}</em
     >&nbsp; returned the following {{ data.results.length }} results:
   </p>
-  <mat-action-list>
-    <button
-      *ngFor="let result of data.results"
-      mat-list-item
-      [mat-dialog-close]="result"
-    >
+  <mat-action-list *ngIf="data.results && data.results.length > 0">
+    <button *ngFor="let result of data.results" mat-list-item [mat-dialog-close]="result">
       <strong style="margin-right: 1em">{{ result.symbol }}</strong>
       {{ result.name }}
       &nbsp;<small>({{ result.type }})</small>

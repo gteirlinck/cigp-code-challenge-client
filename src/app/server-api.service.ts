@@ -42,31 +42,43 @@ export class ServerAPIService {
   }
 
   searchSymbol(keyword: string): Observable<SearchResultItem[]> {
-    return this.httpClient.get<SearchResultItem[]>(`${environment.APIEndpoint}/search-symbol`, {
+    return this.httpClient.get<SearchResultItem[]>(`${environment.APIEndpoint}/api/search-symbol`, {
       params: { keyword }
     });
   }
 
   private async switchSubscription(from: string, to: string) {
-    this.socket.emit('switchSubscription', { from, to });
-    const result = await this.socket.fromOneTimeEvent<string>('switchedSubscription');
-    console.log(result);
+    try {
+      this.socket.emit('switchSubscription', { from, to });
+      const result = await this.socket.fromOneTimeEvent<string>('switchedSubscription');
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async subscribeToSymbolUpdates(symbol: string = null) {
-    this.quoteUpdateSubscription = this.quoteUpdate.subscribe(quote => (this.latestQuote = quote));
+    try {
+      this.quoteUpdateSubscription = this.quoteUpdate.subscribe(quote => (this.latestQuote = quote));
+      this.socket.emit('subscribe', symbol || this._activeStock.symbol);
 
-    this.socket.emit('subscribe', symbol || this._activeStock.symbol);
-    const subscriptionResult = await this.socket.fromOneTimeEvent<string>('subscribed');
-    console.log(subscriptionResult);
+      const subscriptionResult = await this.socket.fromOneTimeEvent<string>('subscribed');
+      console.log(subscriptionResult);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async unsubscribeFromSymbolUpdates() {
-    this.socket.emit('unsubscribe', this._activeStock.symbol);
-    const unsubscriptionResult = await this.socket.fromOneTimeEvent<string>('unsubscribed');
-    console.log(unsubscriptionResult);
+    try {
+      this.socket.emit('unsubscribe', this._activeStock.symbol);
+      const unsubscriptionResult = await this.socket.fromOneTimeEvent<string>('unsubscribed');
+      console.log(unsubscriptionResult);
 
-    this.quoteUpdateSubscription.unsubscribe();
+      this.quoteUpdateSubscription.unsubscribe();
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 

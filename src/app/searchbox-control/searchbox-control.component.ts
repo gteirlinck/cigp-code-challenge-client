@@ -56,9 +56,9 @@ export class SearchboxControlComponent implements OnInit {
       data: { keyword, results }
     });
 
-    dialogRef.afterClosed().subscribe(symbol => {
+    dialogRef.afterClosed().subscribe(async symbol => {
       if (symbol) {
-        this.service.setActiveStock(symbol);
+        await this.service.setActiveStock(symbol);
       }
     });
   }

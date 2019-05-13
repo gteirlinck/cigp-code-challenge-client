@@ -60,20 +60,20 @@ export class HoldingsService {
   }
 
   private getHoldingsFromServer(): Observable<Holdings> {
-    return this.httpClient.get<Holdings>(`${environment.APIEndpoint}/holdings`, {
+    return this.httpClient.get<Holdings>(`${environment.APIEndpoint}/api/holdings`, {
       headers: new HttpHeaders().set('Authorization', this.authHeader)
     });
   }
 
   private getHoldingFromServer(symbol: string): Observable<Holding> {
-    return this.httpClient.get<Holding>(`${environment.APIEndpoint}/holdings/${symbol}`, {
+    return this.httpClient.get<Holding>(`${environment.APIEndpoint}/api/holdings/${symbol}`, {
       headers: new HttpHeaders().set('Authorization', this.authHeader)
     });
   }
 
   private createHoldingOnServer(holding: Holding): void {
     this.httpClient
-      .post(`${environment.APIEndpoint}/holdings`, holding, {
+      .post(`${environment.APIEndpoint}/api/holdings`, holding, {
         headers: new HttpHeaders().set('Authorization', this.authHeader)
       })
       .subscribe(
@@ -86,7 +86,7 @@ export class HoldingsService {
 
   private updateHoldingOnServer(holding: Holding): void {
     this.httpClient
-      .put(`${environment.APIEndpoint}/holdings/${holding.symbol}`, holding, {
+      .put(`${environment.APIEndpoint}/api/holdings/${holding.symbol}`, holding, {
         headers: new HttpHeaders().set('Authorization', this.authHeader)
       })
       .subscribe(

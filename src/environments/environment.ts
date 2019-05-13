@@ -4,12 +4,12 @@
 
 export const environment = {
   production: false,
-  APIEndpoint: 'http://localhost:3000/api',
+  APIEndpoint: 'http://localhost:3000',
   Auth0Config: {
     clientID: 'And6CEN5kGGDM71WtJ8i5ahkS4LNAkII',
     domain: 'gteirlinck.auth0.com',
     responseType: 'token id_token',
-    redirectUri: 'http://localhost:4200/callback',
+    redirectUri: 'http://localhost:4200/#/callback',
     scope: 'openid profile',
     audience: 'https://cigp.api'
   }
